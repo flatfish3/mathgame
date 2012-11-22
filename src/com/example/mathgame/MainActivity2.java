@@ -8,11 +8,12 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class MainActivity2 extends Activity implements OnClickListener{
 
 	TextView problem, result;
-	EditText value;
+	EditText answer;
 	Button btn_submit, btn_close;	
 	
 	int x, y;
@@ -25,7 +26,7 @@ public class MainActivity2 extends Activity implements OnClickListener{
         
         problem = (TextView)findViewById(R.id.textView1);
         result = (TextView)findViewById(R.id.textView2);
-        value = (EditText)findViewById(R.id.editText1);
+        answer = (EditText)findViewById(R.id.editText1);
         btn_submit = (Button)findViewById(R.id.button1);
         btn_close =  (Button)findViewById(R.id.button2);
         
@@ -53,17 +54,25 @@ public class MainActivity2 extends Activity implements OnClickListener{
 		
 		switch(v.getId()){
 		case R.id.button1:
-			if(Integer.parseInt(value.getText().toString()) == x+y)
-				result.setText("정답 : " + ++count_o + ", 오답 : " + count_x);
+			
+			if(answer.getText().toString().equals("")){
+				Toast.makeText(this, "숫자 입력후 제출하세요.", 1000).show();
+				break;
+			}
+			
+			if(Integer.parseInt(answer.getText().toString()) == x+y)
+				count_o++;
 			else
-				result.setText("정답 : " + count_o + ", 오답 : " + ++count_x);
+				count_x++;
+				
+			result.setText("정답 : " + count_o + ", 오답 : " + count_x);
 			
 			x = (int)Math.round(Math.random() * 99);
 			y = (int)Math.round(Math.random() * 99);
 			
 			problem.setText(x + " + " + y + " = ");
 			
-			value.setText("");
+			answer.setText("");
 			
 			break;
 			
